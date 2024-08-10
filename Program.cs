@@ -8,8 +8,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Login");
 }
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -17,6 +18,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
 app.MapGet("/", context =>
 {
     context.Response.Redirect("/Login");

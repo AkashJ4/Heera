@@ -7,45 +7,147 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Heera.styles.css" asp-append-version="true" />
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-color: #122C34;
+            --font-color: white;
+        }
+
+        /* Simplistic Navbar Styling */
+        .navbar {
+            background-color: var(--primary-color);
+            border-bottom: 1px solid #dee2e6;
+        }
+
+            /* Ensure the color is applied to all text inside the navbar */
+            .navbar .navbar-brand,
+            .navbar .nav-link {
+                color: var(--font-color) !important;
+            }
+
+                /* Change color on hover */
+                .navbar .navbar-brand:hover,
+                .navbar .nav-link:hover {
+                    color: #007bff !important;
+                }
+
+        /* Right-align the navbar content */
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 200px;
+            background-color: var(--primary-color);
+            padding-top: 20px;
+            color: var(--font-color);
+            transition: width 0.3s;
+        }
+
+            .sidebar a {
+                display: block;
+                color: var(--font-color);
+                padding: 10px 15px;
+                text-decoration: none;
+            }
+
+                .sidebar a:hover {
+                    background-color: #007bff;
+                    color: var(--font-color);
+                }
+
+            .sidebar.collapsed {
+                width: 60px;
+            }
+
+                .sidebar.collapsed a {
+                    text-align: center;
+                    padding: 10px 0;
+                }
+
+                    .sidebar.collapsed a span {
+                        display: none;
+                    }
+
+        .container-main {
+            margin-left: 220px; /* Adjust to fit the sidebar */
+            padding: 15px;
+            transition: margin-left 0.3s;
+        }
+
+            .container-main.collapsed {
+                margin-left: 80px;
+            }
+
+        /* Sidebar Toggle Button */
+        .collapse-btn {
+            background-color: var(--primary-color);
+            color: var(--font-color);
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px; /* Adds space between the button and the first link */
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-light">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Heera</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar Toggle Button -->
+        <button class="collapse-btn" onclick="toggleSidebar()">☰</button>
+        <a asp-area="" asp-page="/Index">Home <span>Link</span></a>
+        <a asp-area="" asp-page="/Privacy">Privacy <span>Link</span></a>
+        <a href="#">Link 3 <span>Link</span></a>
+        <a href="#">Link 4 <span>Link</span></a>
+    </div>
+
+    <div class="container-main">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Heera - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+            document.querySelector('.container-main').classList.toggle('collapsed');
+        }
+    </script>
 </body>
 </html>
