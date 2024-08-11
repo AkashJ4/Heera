@@ -1,3 +1,5 @@
+using Heera.InputCollector;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,7 +12,11 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Login");
 }
-
+void ConfigureServices(IServiceCollection services)
+{
+    services.AddRazorPages();
+    services.AddScoped<InputSaver>(); // Register InputSaver for DI
+}
 app.UseStaticFiles();
 
 app.UseRouting();

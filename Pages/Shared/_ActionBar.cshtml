@@ -1,0 +1,27 @@
+﻿<div class="form-buttons">
+    <button type="button" class="btn btn-primary" id="btnNew" onclick="handleNewClick()">New</button>
+    <button type="button" class="btn btn-success" id="btnSave" onclick="submitForm()">Save</button>
+</div>
+
+<script>
+    function handleNewClick() {
+        document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
+    }
+
+    function submitForm() {
+        // Find the nearest form and submit it
+        const form = document.querySelector('form');
+        if (form) {
+            // Append hidden input to specify the action (page handler) if needed
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '__handler';
+            input.value = 'Save';
+            form.appendChild(input);
+
+            form.submit();
+        } else {
+            console.error('Form not found');
+        }
+    }
+</script>
